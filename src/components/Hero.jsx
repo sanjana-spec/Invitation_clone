@@ -1,6 +1,6 @@
 import couplePic from '../assets/couple_pic.webp'
 import topLeft from '../assets/topleft.svg'
-import topRight from '../assets/topRight.svg'
+import topRight from '../assets/topright.svg'
 import bottomLeft from '../assets/bottomleft.svg'
 import bottomRight from '../assets/bottomright.svg'
 function Hero() {
