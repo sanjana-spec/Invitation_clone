@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Arizonia&family=Lora:wght@400;500;600;700&display=swap');
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+   GLOBAL SCROLL REVEAL ANIMATION
+   */
+
+.scroll-reveal {
+  opacity: 0;
+
+  transform:
+    translateY(50px) scale(0.96);
+
+  filter: blur(8px);
+
+  transition:
+    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+
+  will-change:
+    opacity,
+    transform,
+    filter;
+}
+
+
+.scroll-reveal.show {
+  opacity: 1;
+
+  transform:
+    translateY(0) scale(1);
+
+  filter: blur(0);
+
+  transition:
+    opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.eng007-swiper-slide {
+    transition:
+        opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1),
+        transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+
+    will-change: opacity, transform;
+}
+/* =========================================================
+   WISH CHANGE ANIMATION
+   ========================================================= */
+
+.wish-content {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+
+    filter: blur(0);
+
+    transition:
+        opacity 0.45s ease,
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.45s ease;
+}
+
+
+.wish-content.wish-changing {
+    opacity: 0;
+
+    transform: translateY(10px) scale(0.98);
+
+    filter: blur(4px);
+}
+/* =========================================================
+   HERO CORNER FLOWER ENTRANCE
+   ========================================================= */
+
+.hero-top-left,
+.hero-top-right,
+.hero-bottom-left,
+.hero-bottom-right {
+    opacity: 0;
+
+    animation-duration: 1.2s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: forwards;
+
+    will-change: transform, opacity;
+}
+
+
+/* Top-left */
+
+.hero-top-left {
+    transform-origin: top left;
+
+    animation-name: heroCornerTopLeft;
+
+    animation-delay: 0.15s;
+}
+
+
+/* Top-right */
+
+.hero-top-right {
+    transform-origin: top right;
+
+    animation-name: heroCornerTopRight;
+
+    animation-delay: 0.25s;
+}
+
+
+/* Bottom-left */
+
+.hero-bottom-left {
+    transform-origin: bottom left;
+
+    animation-name: heroCornerBottomLeft;
+
+    animation-delay: 0.35s;
+}
+
+
+/* Bottom-right */
+
+.hero-bottom-right {
+    transform-origin: bottom right;
+
+    animation-name: heroCornerBottomRight;
+
+    animation-delay: 0.45s;
+}
+
+
+/* =========================================================
+   TOP LEFT
+   ========================================================= */
+
+@keyframes heroCornerTopLeft {
+
+    0% {
+        opacity: 0;
+        transform: translate(-18px, -18px) scale(0.55);
+    }
+
+    60% {
+        opacity: 0.8;
+        transform: translate(-4px, -4px) scale(1.04);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   TOP RIGHT
+   ========================================================= */
+
+@keyframes heroCornerTopRight {
+
+    0% {
+        opacity: 0;
+        transform: translate(18px, -18px) scale(0.55);
+    }
+
+    60% {
+        opacity: 0.8;
+        transform: translate(4px, -4px) scale(1.04);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   BOTTOM LEFT
+   ========================================================= */
+
+@keyframes heroCornerBottomLeft {
+
+    0% {
+        opacity: 0;
+        transform: translate(-18px, 18px) scale(0.55);
+    }
+
+    60% {
+        opacity: 0.8;
+        transform: translate(-4px, 4px) scale(1.04);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+
+/* =========================================================
+   BOTTOM RIGHT
+   ========================================================= */
+
+@keyframes heroCornerBottomRight {
+
+    0% {
+        opacity: 0;
+        transform: translate(18px, 18px) scale(0.55);
+    }
+
+    60% {
+        opacity: 0.8;
+        transform: translate(4px, 4px) scale(1.04);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+}
+/* =========================================================
+   SELECTED SCHEDULE CARD
+   ========================================================= */
+
+.eng007-swiper-slide {
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.45s ease;
+}
+
+
+.eng007-swiper-slide .eng007-schedule-card {
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s ease;
+}
+
+
+/* Active card */
+
+.eng007-swiper-slide.selected-card .eng007-schedule-card {
+    transform: scale(1.025);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.16);
+}

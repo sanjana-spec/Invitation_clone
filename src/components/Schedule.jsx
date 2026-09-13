@@ -1,0 +1,361 @@
+import { useRef, useState } from 'react'
+
+import scheduleLeft from '../assets/groomleaf.svg'
+import scheduleRight from '../assets/brideleaf.svg'
+import countdownFlower from '../assets/countdown_flowerleft.svg'
+import wishesFlower from '../assets/wishesflower.svg'
+
+function Schedule() {
+    const [currentSlide, setCurrentSlide] = useState(0)
+
+    const [isDragging, setIsDragging] = useState(false)
+    const [dragStartX, setDragStartX] = useState(0)
+    const [dragOffset, setDragOffset] = useState(0)
+
+    const totalSlides = 3
+    const cardWidth = 340
+    const cardGap = 24
+    const slideDistance = cardWidth + cardGap
+
+    const handlePointerDown = (e) => {
+        setIsDragging(true)
+        setDragStartX(e.clientX)
+        setDragOffset(0)
+    }
+
+    const handlePointerMove = (e) => {
+        if (!isDragging) return
+
+        const distance = e.clientX - dragStartX
+
+        setDragOffset(distance)
+    }
+
+    const handlePointerUp = () => {
+        if (!isDragging) return
+
+        const threshold = 80
+
+        if (dragOffset < -threshold) {
+            // Dragged left
+            setCurrentSlide((prev) =>
+                Math.min(prev + 1, totalSlides - 1)
+            )
+        }
+
+        else if (dragOffset > threshold) {
+            // Dragged right
+            setCurrentSlide((prev) =>
+                Math.max(prev - 1, 0)
+            )
+        }
+
+        setIsDragging(false)
+        setDragOffset(0)
+    }
+    const handlePointerLeave = () => {
+        if (isDragging) {
+            handlePointerUp()
+        }
+    }
+
+    return (
+        <section className="eng007-schedule-section scroll-reveal">
+
+            <div className="eng007-schedule-container">
+
+                {/* ================= HEADER ================= */}
+
+                <header className="eng007-schedule-header">
+
+                    <img
+                        src={scheduleLeft}
+                        alt=""
+                        className="eng007-schedule-leaf eng007-left"
+                    />
+
+                    <h2 className="eng007-schedule-title">
+                        Engagement celebration begins
+                    </h2>
+
+                    <img
+                        src={scheduleRight}
+                        alt=""
+                        className="eng007-schedule-leaf eng007-right"
+                    />
+
+                </header>
+
+
+                {/* ================= CAROUSEL ================= */}
+
+                <div className="eng007-schedule-carousel-wrapper">
+
+                    <div
+                        className="swiper eng007-swiper"
+
+                        onPointerDown={handlePointerDown}
+                        onPointerMove={handlePointerMove}
+                        onPointerUp={handlePointerUp}
+                        onPointerCancel={handlePointerUp}
+                        onPointerLeave={handlePointerLeave}
+
+                        style={{
+                            cursor: isDragging ? 'grabbing' : 'grab'
+                        }}
+                    >
+
+                        <div
+                            className="swiper-wrapper"
+                            style={{
+                                transform: `translateX(${286 - currentSlide * slideDistance + dragOffset}px)`,
+                                transition: isDragging
+                                    ? 'none'
+                                    : 'transform 0.8s cubic-bezier(0.65, 0, 0.35, 1)'
+                            }}
+                        >
+
+
+                            {/* ================= CARD 1 ================= */}
+
+                            <div
+                                className={`swiper-slide eng007-swiper-slide ${currentSlide === 0 ? 'selected-card' : ''
+                                    }`}
+                            >
+
+                                <div className="eng007-schedule-card">
+
+                                    <div className="eng007-card-frame"></div>
+
+                                    <div className="eng007-card-countdown-flower">
+                                        <img
+                                            src={countdownFlower}
+                                            alt=""
+                                        />
+                                    </div>
+
+
+                                    <div className="eng007-card-content-inner">
+
+                                        <div className="eng007-card-icon">
+
+                                            {/* Ring icon */}
+                                            <svg
+                                                stroke="currentColor"
+                                                fill="currentColor"
+                                                strokeWidth="0"
+                                                viewBox="0 0 512 512"
+                                                color="white"
+                                                height="40"
+                                                width="40"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M64 208c0 7.8 4.4 18.7 17.1 30.3C126.5 214.1 188.9 200 256 200s129.5 14.1 174.9 38.3C443.6 226.7 448 215.8 448 208c0-12.3-10.8-32-47.9-50.6C364.9 139.8 314 128 256 128s-108.9 11.8-144.1 29.4C74.8 176 64 195.7 64 208zm192 40c-47 0-89.3 7.6-122.9 19.7C166.3 280.2 208.8 288 256 288s89.7-7.8 122.9-20.3C345.3 255.6 303 248 256 248zM0 208c0-49.6 39.4-85.8 83.3-107.8C129.1 77.3 190.3 64 256 64s126.9 13.3 172.7 36.2c43.9 22 83.3 58.2 83.3 107.8l0 96c0 49.6-39.4 85.8-83.3 107.8C382.9 434.7 321.7 448 256 448s-126.9-13.3-172.7-36.2C39.4 389.8 0 353.6 0 304l0-96z"></path>
+                                            </svg>
+                                        </div>
+
+
+                                        <div className="eng007-card-event-block">
+
+                                            <h3 className="eng007-card-event-name">
+                                                Ring Ceremony
+                                            </h3>
+
+                                            <p className="eng007-card-event-time">
+                                                11:00 AM
+                                            </p>
+
+                                        </div>
+
+
+                                        <div className="eng007-card-wishes-flower">
+
+                                            <img
+                                                src={wishesFlower}
+                                                alt=""
+                                            />
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            {/* ================= CARD 2 ================= */}
+
+                            <div
+                                className={`swiper-slide eng007-swiper-slide ${currentSlide === 1 ? 'selected-card' : ''
+                                    }`}
+                            >
+
+                                <div className="eng007-schedule-card">
+
+                                    <div className="eng007-card-frame"></div>
+
+                                    <div className="eng007-card-countdown-flower">
+                                        <img
+                                            src={countdownFlower}
+                                            alt=""
+                                        />
+                                    </div>
+
+
+                                    <div className="eng007-card-content-inner">
+
+                                        <div className="eng007-card-icon">
+
+                                            {/* Cake icon */}
+                                            <svg
+                                                stroke="currentColor"
+                                                fill="currentColor"
+                                                strokeWidth="0"
+                                                viewBox="0 0 448 512"
+                                                color="white"
+                                                height="40"
+                                                width="40"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M86.4 5.5L61.8 47.6C58 54.1 56 61.6 56 69.2L56 72c0 22.1 17.9 40 40 40s40-17.9 40-40l0-2.8c0-7.6-2-15-5.8-21.6L105.6 5.5C103.6 2.1 100 0 96 0s-7.6 2.1-9.6 5.5zm128 0L189.8 47.6c-3.8 6.5-5.8 14-5.8 21.6l0 2.8c0 22.1 17.9 40 40 40s40-17.9 40-40l0-2.8c0-7.6-2-15-5.8-21.6L233.6 5.5C231.6 2.1 228 0 224 0s-7.6 2.1-9.6 5.5zM317.8 47.6c-3.8 6.5-5.8 14-5.8 21.6l0 2.8c0 22.1 17.9 40 40 40s40-17.9 40-40l0-2.8c0-7.6-2-15-5.8-21.6L361.6 5.5C359.6 2.1 356 0 352 0s-7.6 2.1-9.6 5.5L317.8 47.6zM128 176c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 48c-35.3 0-64 28.7-64 64l0 71c8.3 5.2 18.1 9 28.8 9c13.5 0 27.2-6.1 38.4-13.4c5.4-3.5 9.9-7.1 13-9.7c1.5-1.3 2.7-2.4 3.5-3.1c.4-.4 .7-.6 .8-.8l.1-.1s0 0 0 0s0 0 0 0s0 0 0 0s0 0 0 0c3.1-3.2 7.4-4.9 11.9-4.8s8.6 2.1 11.6 5.4c0 0 0 0 0 0s0 0 0 0l.1 .1c.1 .1 .4 .4 .7 .7c.7 .7 1.7 1.7 3.1 3c2.8 2.6 6.8 6.1 11.8 9.5c10.2 7.1 23 13.1 36.3 13.1s26.1-6 36.3-13.1c5-3.5 9-6.9 11.8-9.5c1.4-1.3 2.4-2.3 3.1-3c.3-.3 .6-.6 .7-.7l.1-.1c3-3.5 7.4-5.4 12-5.4s9 2 12 5.4l.1 .1c.1 .1 .4 .4 .7 .7c.7 .7 1.7 1.7 3.1 3c2.8 2.6 6.8 6.1 11.8 9.5c10.2 7.1 23 13.1 36.3 13.1s26.1-6 36.3-13.1c5-3.5 9-6.9 11.8-9.5c1.4-1.3 2.4-2.3 3.1-3c.3-.3 .6-.6 .7-.7l.1-.1c2.9-3.4 7.1-5.3 11.6-5.4s8.7 1.6 11.9 4.8c0 0 0 0 0 0s0 0 0 0s0 0 0 0l.1 .1c.2 .2 .4 .4 .8 .8c.8 .7 1.9 1.8 3.5 3.1c3.1 2.6 7.5 6.2 13 9.7c11.2 7.3 24.9 13.4 38.4 13.4c10.7 0 20.5-3.9 28.8-9l0-71c0-35.3-28.7-64-64-64l0-48c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 48-64 0 0-48c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 48-64 0 0-48zM448 394.6c-8.5 3.3-18.2 5.4-28.8 5.4c-22.5 0-42.4-9.9-55.8-18.6c-4.1-2.7-7.8-5.4-10.9-7.8c-2.8 2.4-6.1 5-9.8 7.5C329.8 390 310.6 400 288 400s-41.8-10-54.6-18.9c-3.5-2.4-6.7-4.9-9.4-7.2c-2.7 2.3-5.9 4.7-9.4 7.2C201.8 390 182.6 400 160 400s-41.8-10-54.6-18.9c-3.7-2.6-7-5.2-9.8-7.5c-3.1 2.4-6.8 5.1-10.9 7.8C71.2 390.1 51.3 400 28.8 400c-10.6 0-20.3-2.2-28.8-5.4L0 480c0 17.7 14.3 32 32 32l384 0c17.7 0 32-14.3 32-32l0-85.4z"></path>
+                                            </svg>
+
+                                        </div>
+
+
+                                        <div className="eng007-card-event-block">
+
+                                            <h3 className="eng007-card-event-name">
+                                                Cake Cutting
+                                            </h3>
+
+                                            <p className="eng007-card-event-time">
+                                                11:30 AM
+                                            </p>
+
+                                        </div>
+
+
+                                        <div className="eng007-card-wishes-flower">
+
+                                            <img
+                                                src={wishesFlower}
+                                                alt=""
+                                            />
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            {/* ================= CARD 3 ================= */}
+
+                            <div
+                                className={`swiper-slide eng007-swiper-slide ${currentSlide === 2 ? 'selected-card' : ''
+                                    }`}
+                            >
+
+                                <div className="eng007-schedule-card">
+
+                                    <div className="eng007-card-frame"></div>
+
+                                    <div className="eng007-card-countdown-flower">
+                                        <img
+                                            src={countdownFlower}
+                                            alt=""
+                                        />
+                                    </div>
+
+
+                                    <div className="eng007-card-content-inner">
+
+                                        <div className="eng007-card-icon">
+
+                                            {/* Lunch / cutlery icon */}
+                                            <svg
+                                                stroke="currentColor"
+                                                fill="currentColor"
+                                                strokeWidth="0"
+                                                viewBox="0 0 24 24"
+                                                color="white"
+                                                height="40"
+                                                width="40"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                                <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"></path>
+                                            </svg>
+
+                                        </div>
+
+
+                                        <div className="eng007-card-event-block">
+
+                                            <h3 className="eng007-card-event-name">
+                                                Lunch
+                                            </h3>
+
+                                            <p className="eng007-card-event-time">
+                                                01:00 PM
+                                            </p>
+
+                                        </div>
+
+
+                                        <div className="eng007-card-wishes-flower">
+
+                                            <img
+                                                src={wishesFlower}
+                                                alt=""
+                                            />
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* Swiper pagination */}
+
+                    <div className="eng007-swiper-pagination">
+
+                        <span
+                            className={`schedule-dot ${currentSlide === 0 ? 'active' : ''
+                                }`}
+                            onClick={() => setCurrentSlide(0)}
+                        ></span>
+
+                        <span
+                            className={`schedule-dot ${currentSlide === 1 ? 'active' : ''
+                                }`}
+                            onClick={() => setCurrentSlide(1)}
+                        ></span>
+
+                        <span
+                            className={`schedule-dot ${currentSlide === 2 ? 'active' : ''
+                                }`}
+                            onClick={() => setCurrentSlide(2)}
+                        ></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+    )
+}
+
+export default Schedule
